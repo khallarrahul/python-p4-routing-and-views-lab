@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from flask import Flask, Request, Response
+from flask import Flask
 
 app = Flask(__name__)
 
@@ -12,32 +12,33 @@ def index():
 
 @app.route("/print/<string:parameter>")
 def print_string(parameter):
-    print(parameter)
-    return parameter
+    print(f"{parameter}")
+    return f"{parameter}"
 
 
 @app.route("/count/<int:parameter>")
 def count(parameter):
-    numbers = "\n".join(str(num) for num in range(parameter + 1))
-    return numbers
+    c = ""
+    for num in range(0, parameter):
+        print(f"{num}")
+        c = c + str(num) + "\n"
+    return c
 
 
 @app.route("/math/<int:num1>/<string:operation>/<int:num2>")
 def math(num1, operation, num2):
-    if operation == "+":
-        result = num1 + num2
+    results = 0
+    if operation == "div":
+        results = num1 / num2
+    elif operation == "+":
+        results = num1 + num2
     elif operation == "-":
-        result = num1 - num2
+        results = num1 - num2
     elif operation == "*":
-        result = num1 * num2
-    elif operation == "div":
-        result = num1 / num2
-    elif operation == "%":
-        result = num1 % num2
+        results = num1 * num2
     else:
-        return "Invalid operation"
-
-    return f"The result of {num1} {operation} {num2} is {result}"
+        results = num1 % num2
+    return str(results)
 
 
 if __name__ == "__main__":
